@@ -6,9 +6,11 @@ use App\Repository\EvenementsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=EvenementsRepository::class)
+ * @Vich\Uploadable
  */
 class Evenements
 {
@@ -43,6 +45,12 @@ class Evenements
      * @ORM\Column(type="string", length=255)
      */
     private $imageCouverture;
+    
+    /**
+     * @Vich\UploadableField(mapping="imagesEvenement", fileNameProperty="imageCouverture")
+     */
+    private $imageCouvertureFichier;
+
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -131,6 +139,20 @@ class Evenements
     {
         $this->imageCouverture = $imageCouverture;
 
+        return $this;
+    }
+     public function getImageCouvertureFichier()
+    {
+        return $this->imageCouvertureFichier;
+    }
+
+    public function setImageCouvertureFichier($imageCouvertureFichier = null): self
+    {
+        $this->imageCouvertureFichier = $imageCouvertureFichier;
+
+        if($imageCouvertureFichier){
+            $this->updatedAt = new \DateTime('now');
+        }
         return $this;
     }
 

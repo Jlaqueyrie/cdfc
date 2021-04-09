@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Evenement;
+use App\Entity\Evenements;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -11,11 +11,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
-class EvenementCrudController extends AbstractCrudController
+class EvenementsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Evenement::class;
+        return Evenements::class;
     }
 
     public function configureFields(string $pageName): iterable
