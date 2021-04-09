@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ArticlesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
+ * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Articles
 {
@@ -41,6 +44,11 @@ class Articles
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageCouverture;
+    
+    /**
+     * @Vich\UploadableField(mapping="imagesArticles", fileNameProperty="imageCouverture")
+     */
+    private $imageCouvertureFichier;
 
     /**
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="articles")
@@ -138,6 +146,21 @@ class Articles
     {
         $this->categorie = $categorie;
 
+        return $this;
+    }
+    
+    public function getImageCouvertureFichier()
+    {
+        return $this->imageCouvertureFichier;
+    }
+
+    public function setImageCouvertureFichier($imageCouvertureFichier = null): self
+    {
+        $this->imageCouvertureFichier = $imageCouvertureFichier;
+
+        if($imageCouvertureFichier){
+            $this->updatedAt = new \DateTime('now');
+        }
         return $this;
     }
 }
