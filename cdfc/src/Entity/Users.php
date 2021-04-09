@@ -56,9 +56,15 @@ class Users implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="nom")
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -202,6 +208,36 @@ class Users implements UserInterface
             // set the owning side to null (unless already changed)
             if ($article->getAuteur() === $this) {
                 $article->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservations[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservations $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setNom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservations $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getNom() === $this) {
+                $reservation->setNom(null);
             }
         }
 
