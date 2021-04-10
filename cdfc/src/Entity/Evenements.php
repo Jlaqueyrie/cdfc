@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\EvenementsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EvenementsRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=EvenementsRepository::class)
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  */
 class Evenements
@@ -163,14 +165,24 @@ class Evenements
 
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setAutoCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
     }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
@@ -185,7 +197,7 @@ class Evenements
         return $this->isActif;
     }
 
-    public function setIsActif(bool $isActif): self
+    public function setIsActif(bool $isActif = false): self
     {
         $this->isActif = $isActif;
 
@@ -220,5 +232,9 @@ class Evenements
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

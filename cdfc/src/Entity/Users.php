@@ -245,4 +245,8 @@ class Users implements UserInterface
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->prenom . " " . $this->nom;
+    }
 }

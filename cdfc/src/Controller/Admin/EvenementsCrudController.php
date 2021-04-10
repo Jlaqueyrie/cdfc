@@ -28,7 +28,7 @@ class EvenementsCrudController extends AbstractCrudController
             ImageField::new('imageCouverture')->setBasePath('/images/evenements')->onlyOnDetail(),
             DateField::new('dateDebut', "Date de début de l'évènement"),
             DateField::new('dateFin', "Date de fin de l'évènement"),
-            BooleanField::new('actif')
+            BooleanField::new('isActif')
         ];
     }
 }

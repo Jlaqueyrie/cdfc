@@ -93,6 +93,14 @@ class Articles
     {
         return $this->createdAt;
     }
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setAutoCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {

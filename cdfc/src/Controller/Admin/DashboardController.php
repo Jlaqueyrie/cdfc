@@ -33,19 +33,19 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Comité des fête cabreret');
+            ->setTitle('Comité des fêtes cabreret');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Gestiond des articles');
+        yield MenuItem::section('Gestion des articles');
         yield MenuItem::linkToCrud('Articles', 'fa fa-newspaper-o', Articles::class);
         yield MenuItem::linkToCrud('Catégorie des articles', 'fa fa-bookmark', Categories::class);
         yield MenuItem::section('Gestion évènements');
-        yield MenuItem::linkToCrud('Evènement', 'fa fa-calendar', Evenements::class);
+        yield MenuItem::linkToCrud('Evènements', 'fa fa-calendar', Evenements::class);
         yield MenuItem::section('Gestion des réservations');
-        yield MenuItem::linkToCrud('Réservation', 'fa fa-user-plus', Reservations::class);
-        yield MenuItem::section('Gestion utilisateur');
+        yield MenuItem::linkToCrud('Réservations', 'fa fa-user-plus', Reservations::class);
+        yield MenuItem::section('Gestion des utilisateurs');
         yield MenuItem::linkToCrud('Users', 'fa fa-users', Users::class);
     }
 }
